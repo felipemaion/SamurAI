@@ -5,7 +5,6 @@ import logging
 from datetime import datetime
 from typing import List
 
-import spacy
 from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
@@ -37,13 +36,13 @@ def normalize_whitespace(text: str) -> str:
 class DocumentProcessor:
     """Classe para processar documentos PDF e gerar chunks por sentença com spaCy"""
 
-    def __init__(self, chunk_size: int = 1000, chunk_overlap: int = 200):
+    def __init__(self, nlp, chunk_size: int = 1000, chunk_overlap: int = 200):
         self.chunk_size = chunk_size
         self.chunk_overlap = chunk_overlap
 
         # Carrega modelo spaCy para português
         try:
-            self.nlp = spacy.load("pt_core_news_sm")
+            self.nlp = nlp
             logger.info("✅ spaCy carregado com modelo pt_core_news_sm")
         except OSError:
             logger.error(

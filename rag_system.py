@@ -18,7 +18,7 @@ nlp = spacy.load("pt_core_news_sm")
 class RAGSystem:
     def __init__(self, nlp, content_dir: str = "./content"):
         self.content_dir = Path(content_dir)
-        self.processor = DocumentProcessor()
+        self.processor = DocumentProcessor(nlp=nlp)
         self.nlp = nlp
         self.vector_store = VectorStore(nlp=nlp)
         self.llm_client = LMStudioClient()
