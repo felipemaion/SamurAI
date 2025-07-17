@@ -140,6 +140,7 @@ class RAGSystem:
 
 
 def main():
+    print("⚔️ 🥷  Bem-vindo ao sistema SamurAI  🥷⚔️")
     print("🚀 Iniciando Sistema RAG com LM Studio...")
     rag = RAGSystem(nlp=nlp)
     rag.index_documents()
