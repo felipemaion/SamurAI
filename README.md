@@ -6,7 +6,7 @@
 
 ## 🚀 Visão Geral (Objetivo)
 
-Este projeto implementa dois sistemas RAG para responder perguntas em português com precisão e referências aos documentos utilizados.  
+Este projeto implementa um sistema RAG para responder perguntas em português com precisão e referências aos documentos utilizados.  
 Ele indexa documentos PDF, divide-os em chunks, cria embeddings vetoriais e utiliza LMStudio para gerar respostas baseadas no contexto recuperado.
 
 ### Componentes principais:
@@ -15,9 +15,9 @@ Ele indexa documentos PDF, divide-os em chunks, cria embeddings vetoriais e util
 ✅ **Indexação**: Armazenamento dos vetores em FAISS, junto com metadados e palavras-chave.  
 ✅ **Busca**:
 
-- `rag_system.py` — busca puramente semântica vetorial.
-- `rag_with_keywords.py` — prioriza correspondências literais e balanceamento entre documentos.
-  ✅ **LMStudio**: gera a resposta baseada no contexto recuperado.
+- `rag_system.py` — Sistema Principal.
+
+✅ **LMStudio**: gera a resposta baseada no contexto recuperado.
 
 ---
 
@@ -28,11 +28,9 @@ Ele indexa documentos PDF, divide-os em chunks, cria embeddings vetoriais e util
 ├── baixarTeorPL.py            # script auxiliar para baixar PDFs
 ├── install_script.py          # script para criar venv e instalar dependências
 ├── rag_system.py              # RAG com busca puramente vetorial
-├── rag_with_keywords.py       # RAG com keywords + vetorial balanceado
 ├── .venv/                     # será criado automaticamente
 ├── content/                   # coloque seus PDFs aqui
 ├── rag_index_v1/              # índice para rag_system.py
-├── rag_index_v2/              # índice para rag_with_keywords.py
 ```
 
 ---
@@ -115,23 +113,11 @@ python rag_system.py
 - Busca puramente semântica vetorial.
 - Pode retornar vários chunks de um mesmo documento.
 
-### 2️⃣ **Modo avançado — keywords + balanceamento**
-
-```bash
-python rag_with_keywords.py
-```
-
-- Indexa documentos (ou usa índice salvo em `rag_index_v2/`).
-- Prioriza correspondência literal.
-- Balanceia resultados entre documentos diferentes.
-
----
-
 ## 🧪 Comandos no chat
 
 - Pergunte algo: digite sua pergunta e pressione `Enter`.
 - Reindexar: digite `reindex` para reprocessar todos os PDFs.
-- Listar documentos indexados: digite `list`.
+- Listar documentos indexados: digite `list` ou `list verbose`.
 - Sair: digite `sair`, `quit` ou `exit`.
 
 ---
