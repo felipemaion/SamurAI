@@ -91,8 +91,6 @@ source .venv/bin/activate
 
 ---
 
-## 📝 Como usar
-
 ### ⬇ Baixar documentos (Lista fixa, precisaremos melhorar para automatizar)
 
 ```bash
@@ -100,6 +98,8 @@ python baixarTeorPL.py
 ```
 
 Ele irá baixar os arquivos de autoria e coautoria e colocar nas respectivas pastas em `content/`
+
+## 📝 Como usar
 
 ### 🔍 Indexar documentos e rodar chat
 
