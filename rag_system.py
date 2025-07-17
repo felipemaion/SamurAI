@@ -11,7 +11,7 @@ from logger_config import get_logger
 logger = get_logger(__name__)
 
 
-# carrega uma vez o modelo spaCy para português
+# carrega uma única vez o modelo spaCy para português
 nlp = spacy.load("pt_core_news_sm")
 
 

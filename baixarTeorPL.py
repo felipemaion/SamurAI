@@ -2,7 +2,6 @@ from pathlib import Path
 import requests
 from bs4 import BeautifulSoup
 
-# "http://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=2313803"
 autor = [
     # Adicione aqui os links das páginas
     "http://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=2506856",
