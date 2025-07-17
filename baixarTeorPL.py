@@ -1,7 +1,9 @@
+import os
+from pathlib import Path
 import requests
 from bs4 import BeautifulSoup
-import os
 
+# "http://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=2313803"
 autor = [
     # Adicione aqui os links das páginas
     "http://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=2506856",
@@ -402,16 +404,22 @@ coautores = [
     "http://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=2420536",
 ]
 
-output_dir1 = "./content/autorais"
-os.makedirs(output_dir1, exist_ok=True)
 
-headers = {"User-Agent": "Mozilla/5.0"}
+# headers = {"User-Agent": "Mozilla/5.0"}
 
 
-def baixar_pdf(list_url, output_dir):
-    for url in coautores:
+def baixar_pdf(list_url, output_dir, headers=None):
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    default_headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/120.0 Safari/537.36"
+    }
+
+    for url in list_url:
         try:
-            resp = requests.get(url, headers=headers, timeout=10)
+            resp = requests.get(url, headers=headers or default_headers, timeout=10)
             resp.raise_for_status()
             soup = BeautifulSoup(resp.content, "html.parser")
 
@@ -420,20 +428,26 @@ def baixar_pdf(list_url, output_dir):
 
             if link_tag and link_tag.has_attr("href") and name_tag:
                 pdf_url = link_tag["href"]
-
                 if not pdf_url.lower().startswith("http"):
                     pdf_url = requests.compat.urljoin(url, pdf_url)
 
-                pdf_resp = requests.get(pdf_url, headers=headers, timeout=15)
-                pdf_resp.raise_for_status()
-
                 filename = name_tag.get_text(strip=True).replace("/", "-") + ".pdf"
-                filepath = os.path.join(output_dir, filename)
+                filepath = output_dir / filename
+
+                if filepath.exists():
+                    print(f"⏭️ Já existe: {filepath}")
+                    continue
+
+                pdf_resp = requests.get(
+                    pdf_url, headers=headers or default_headers, timeout=15
+                )
+                pdf_resp.raise_for_status()
 
                 with open(filepath, "wb") as f:
                     f.write(pdf_resp.content)
 
-                print(f"✅ Baixado: {filename}")
+                print(f"✅ Baixado: {filepath}")
+
             else:
                 print(
                     f"⚠️ Link 'linkDownloadTeor' ou nome 'nomeProposicao' não encontrado em {url}"
@@ -443,9 +457,10 @@ def baixar_pdf(list_url, output_dir):
             print(f"❌ Erro ao processar {url}: {e}")
 
 
+print("Baixando PDFs de Leis autorais...")
+output_dir1 = "./content/autorais"
 baixar_pdf(autor, output_dir1)
 
-
+print("Baixando PDFs de Leis co-autorais...")
 output_dir2 = "./content/co-autorais"
-os.makedirs(output_dir2, exist_ok=True)
 baixar_pdf(coautores, output_dir2)

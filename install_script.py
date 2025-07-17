@@ -61,6 +61,7 @@ def install_dependencies(python_exe):
         "nltk>=3.8.1",
         "lmstudio>=0.0.2",
         "bs4>=0.0.2",
+        "spacy>=3.8.7",
     ]
 
     # Instalar FAISS separadamente
@@ -91,6 +92,11 @@ def install_dependencies(python_exe):
     # Baixar dados do nltk
     print("📚 Baixando stopwords para NLTK...")
     run_command([str(python_exe), "-m", "nltk.downloader", "stopwords"])
+
+    print("📚 Baixando pt_core_news_sm para spaCy...")
+    run_command([str(python_exe), "-m", "spacy", "download", "pt_core_news_sm"])
+
+    # python -m spacy download pt_core_news_sm
 
     print("✅ Instalação concluída!")
 
