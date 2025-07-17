@@ -1,0 +1,6 @@
+.venv/
+venv/
+content/autorais/*
+content/co-autorais/*
+.DS_Store
+rag_index*
