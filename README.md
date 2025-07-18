@@ -101,7 +101,7 @@ Ele irá baixar os arquivos de autoria e coautoria e colocar nas respectivas pas
 
 ### 🔍 Indexar documentos e rodar chat
 
-Você pode escolher entre os dois modos, em testes:
+Após os arquivos estarem na pasta `content/` você pode rodar o sistema da RAG:
 
 ### 1️⃣ **Modo básico — vetorial puro**
 
